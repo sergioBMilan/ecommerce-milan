@@ -1,20 +1,47 @@
-// TODO Fase A: mostrar al menos 1 producto hardcoded con link a /product/[slug]
-// TODO Fase B: implementar grid de productos + buscador server-side
+import { searchProducts } from "../lib/search";
 
-export default function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q = "" } = await searchParams;
+  const products = await searchProducts(q);
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Catálogo</h1>
-      <p className="text-neutral-600 mb-4">
-        Placeholder — implementar grid de productos y buscador.
-      </p>
-      <ul className="list-disc pl-6">
-        <li>
-          <a href="/product/milan-urbana-01" className="underline">
-            Producto de ejemplo: Milán Urbana 01
-          </a>
-        </li>
+
+      <form action="/" method="get" className="mb-6">
+        <input
+          type="text"
+          name="q"
+          defaultValue={q}
+          placeholder="Buscar bicicletas…"
+          className="border border-neutral-300 rounded px-3 py-2 w-80"
+        />
+      </form>
+
+      {q && (
+        <p className="text-sm text-neutral-600 mb-3">
+          {products.length} resultado(s) para “{q}”
+        </p>
+      )}
+
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {products.map((p) => (
+          <li key={p.slug} className="border border-neutral-200 rounded p-3">
+            <a href={`/product/${p.slug}`} className="font-medium underline">
+              {p.name}
+            </a>
+            <p className="text-sm text-neutral-600">{p.description}</p>
+          </li>
+        ))}
       </ul>
+
+      {products.length === 0 && (
+        <p className="text-neutral-600">Sin resultados.</p>
+      )}
     </div>
   );
 }
