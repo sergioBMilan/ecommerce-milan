@@ -51,6 +51,13 @@ pnpm test
 pnpm test:watch
 ```
 
+## Requisitos de calidad (rúbrica)
+
+1. **Deep module**: al menos un módulo en `lib/` debe seguir el patrón *deep module*. Su `index.ts` expone **máximo 3 funciones públicas**; toda la complejidad (helpers, tipos internos, parsing, etc.) vive en archivos internos del módulo y **no** se reexporta.
+2. **Pre-commit hook activo** (Husky): corre `pnpm lint` y `pnpm test`. **Bloquea** commits si algún test falla.
+3. **Al menos un PRD** en [docs/prds/](docs/prds/) para una feature de la Fase 2. (El usuario indicará cuándo estamos en esa fase.)
+4. **Evidencia de Red-Green-Refactor** en al menos una feature: el commit que **agrega el test** debe ser **anterior** al commit que agrega la implementación. Mensaje del primer commit en imperativo describiendo el test que falla (rojo); el segundo, la implementación que lo hace pasar (verde).
+
 ## Flujo de trabajo esperado
 
 1. **Construir incremental**: primero las rutas vacías y navegación end-to-end → luego datos reales → luego interactividad → luego recomendaciones.
