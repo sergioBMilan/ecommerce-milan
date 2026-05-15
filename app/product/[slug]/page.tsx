@@ -1,5 +1,13 @@
-// TODO Fase A: mostrar datos básicos del producto, botón "Agregar al carrito"
-// TODO Fase B: traer datos desde el MCP del Ej 1 + sección de recomendados
+import { notFound } from "next/navigation";
+import { prisma } from "../../../lib/prisma";
+
+function formatCOP(cents: number) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(cents / 100);
+}
 
 export default async function ProductPage({
   params,
@@ -7,16 +15,28 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const product = await prisma.product.findUnique({ where: { slug } });
+
+  if (!product) notFound();
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Producto: {slug}</h1>
-      <p className="text-neutral-600 mb-4">
-        Placeholder — implementar detalle del producto y recomendados.
-      </p>
+    <article className="max-w-2xl">
+      <h1 className="text-2xl font-bold mb-1">{product.name}</h1>
+      <p className="text-sm text-neutral-500 uppercase mb-4">{product.category}</p>
+
+      <p className="text-xl font-semibold mb-4">{formatCOP(product.priceCents)}</p>
+
+      <p className="text-neutral-700 mb-6">{product.description}</p>
+
       <div className="flex gap-4">
-        <a href="/cart" className="underline">Agregar al carrito</a>
-        <a href="/" className="underline">Volver al catálogo</a>
+        <a
+          href="/cart"
+          className="bg-neutral-900 text-white px-4 py-2 rounded"
+        >
+          Agregar al carrito
+        </a>
+        <a href="/" className="underline self-center">Volver al catálogo</a>
       </div>
-    </div>
+    </article>
   );
 }
