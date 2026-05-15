@@ -5,8 +5,13 @@ export type SearchableProduct = {
 };
 
 export function matchProductsByText<T extends SearchableProduct>(
-  _products: T[],
-  _query: string,
+  products: T[],
+  query: string,
 ): T[] {
-  return [];
+  const needle = query.trim().toLowerCase();
+  if (!needle) return products;
+  return products.filter((p) => {
+    const haystack = `${p.name} ${p.description}`.toLowerCase();
+    return haystack.includes(needle);
+  });
 }
