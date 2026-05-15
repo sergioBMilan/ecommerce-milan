@@ -1,4 +1,4 @@
-// TODO Fase B: login mock por email, sesión en cookie
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -7,7 +7,7 @@ export default function LoginPage() {
       <p className="text-neutral-600 mb-4">
         Placeholder — implementar login mock con email.
       </p>
-      <a href="/" className="underline">Volver al catálogo</a>
+      <Link href="/" className="underline">Volver al catálogo</Link>
     </div>
   );
 }
