@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { HeaderCartLink } from "./_components/HeaderCartLink";
 
 export const metadata: Metadata = {
   title: "Milán Bicicletas",
@@ -18,7 +19,7 @@ export default function RootLayout({
         <header className="border-b border-neutral-200 px-6 py-4 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold">Milán Bicicletas</Link>
           <nav className="flex gap-4 text-sm">
-            <Link href="/cart" className="underline">Carrito</Link>
+            <HeaderCartLink />
             <Link href="/login" className="underline">Iniciar sesión</Link>
           </nav>
         </header>

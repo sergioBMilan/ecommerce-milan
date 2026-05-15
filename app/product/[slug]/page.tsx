@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "../../../lib/prisma";
 import { getRecommendations } from "../../../lib/recommendations";
+import { AddToCartButton } from "../../_components/AddToCartButton";
 
 function formatCOP(cents: number) {
   return new Intl.NumberFormat("es-CO", {
@@ -36,12 +37,13 @@ export default async function ProductPage({
       <p className="text-neutral-700 mb-6">{product.description}</p>
 
       <div className="flex gap-4">
-        <Link
-          href="/cart"
-          className="bg-neutral-900 text-white px-4 py-2 rounded"
-        >
-          Agregar al carrito
-        </Link>
+        <AddToCartButton
+          product={{
+            slug: product.slug,
+            name: product.name,
+            priceCents: product.priceCents,
+          }}
+        />
         <Link href="/" className="underline self-center">Volver al catálogo</Link>
       </div>
 

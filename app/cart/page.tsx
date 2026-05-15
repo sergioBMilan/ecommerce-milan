@@ -1,16 +1,10 @@
-// TODO Fase A: mostrar items del carrito (puede ser desde cookie/state)
-// TODO Fase B: persistir entre recargas (cookie o localStorage)
-
-import Link from "next/link";
+import { CartView } from "../_components/CartView";
 
 export default function CartPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Carrito</h1>
-      <p className="text-neutral-600 mb-4">
-        Placeholder — implementar listado del carrito y persistencia.
-      </p>
-      <Link href="/" className="underline">Volver al catálogo</Link>
+      <CartView />
     </div>
   );
 }
